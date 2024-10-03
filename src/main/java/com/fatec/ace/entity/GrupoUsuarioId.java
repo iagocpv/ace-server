@@ -1,14 +1,17 @@
-package com.fatec.ace.model;
+package com.fatec.ace.entity;
+
+import java.io.Serializable;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 
+@SuppressWarnings("serial")
 @Embeddable
 @EqualsAndHashCode
-public class CanalUsuarioId {		
+public class GrupoUsuarioId implements Serializable{		
 	@Column
-	Long canalId;	
+	Long grupoId;
 	@Column
 	Long usuarioId;
 }

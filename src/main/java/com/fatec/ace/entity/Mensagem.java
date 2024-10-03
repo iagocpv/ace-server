@@ -1,4 +1,4 @@
-package com.fatec.ace.model;
+package com.fatec.ace.entity;
 
 import java.time.LocalDateTime;
 

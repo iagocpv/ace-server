@@ -1,4 +1,4 @@
-package com.fatec.ace.model;
+package com.fatec.ace.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -13,16 +13,15 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class GrupoUsuario {
+public class CanalUsuario {
 	@EmbeddedId
-	GrupoUsuarioId id = new GrupoUsuarioId();	
+	CanalUsuarioId id = new CanalUsuarioId();
+	@ManyToOne(fetch = FetchType.LAZY)
+	@MapsId("canalId")
+	Canal canal;
 	@ManyToOne(fetch = FetchType.LAZY)
     @MapsId("usuarioId")
 	Usuario usuario;	
-	@ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("grupoId")
-	Grupo grupo;
 	@Column
 	boolean admin;
-
 }
