@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fatec.ace.dto.mapper.GrupoMapper;
+import com.fatec.ace.dto.response.GrupoFullResponse;
 import com.fatec.ace.entity.Grupo;
-import com.fatec.ace.model.info.GrupoFullInfo;
-import com.fatec.ace.model.mapper.GrupoMapper;
 import com.fatec.ace.service.GrupoService;
 
 @RestController
@@ -29,12 +29,12 @@ public class GrupoController {
 	private GrupoService grupoService;
 	
 	@GetMapping
-	public List<GrupoFullInfo> getGrupos() {
-		return GrupoMapper.toFullInfo(grupoService.buscarTodos());
+	public List<GrupoFullResponse> getGrupos() {
+		return GrupoMapper.toFullResponse(grupoService.buscarTodos());
 	}
 	@GetMapping("/{id}")
-	public GrupoFullInfo getGrupo(@PathVariable("id") Long id) {
-		return GrupoMapper.toFullInfo(grupoService.buscarPorId(id));
+	public GrupoFullResponse getGrupo(@PathVariable("id") Long id) {
+		return GrupoMapper.toFullResponse(grupoService.buscarPorId(id));
 	}
 	@PostMapping
 	public Grupo createGrupo(@RequestBody Grupo grupo) {
@@ -52,6 +52,11 @@ public class GrupoController {
 	@PostMapping("/{id}/adicionarUsuario")
 	public void addUsuario(@PathVariable("id") Long id, @RequestBody ObjectNode json) {
 		grupoService.addUsuario(id, json.get("idUsuario").asLong(), json.get("admin").asBoolean());
+	}
+	
+	@PostMapping("/{id}/removerUsuario/{usuarioId}")
+	public void removerUsuario(@PathVariable("id") Long grupoId, @PathVariable("usuarioId") Long usuarioId) {
+		grupoService.removeUsuario(grupoId, usuarioId);
 	}
 	
 }

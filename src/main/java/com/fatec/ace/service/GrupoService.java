@@ -16,6 +16,8 @@ public class GrupoService {
 	private GrupoRepository repository;
 	@Autowired
 	private UsuarioService usuarioService;
+	@Autowired
+    private SecurityService securityService;
 
 	public List<Grupo> buscarTodos() {
 		return repository.findAll();
@@ -39,6 +41,9 @@ public class GrupoService {
 		repository.save(grupo.addUsuario(usuario, admin));
 	}
 	public void removeUsuario(Long idGrupo, Long idUsuario) {
+		if (!securityService.isUserAdminOfGroup(idGrupo)) {
+            throw new IllegalAccessError("Usuário não tem permissão para remover usuários deste grupo.");
+        }
 		Usuario usuario = usuarioService.buscarPorId(idUsuario);
 		Grupo grupo = buscarPorId(idGrupo);
 		grupo.removeUsuario(usuario);

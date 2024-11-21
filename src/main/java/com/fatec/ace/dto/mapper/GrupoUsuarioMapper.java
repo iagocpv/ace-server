@@ -1,17 +1,17 @@
-package com.fatec.ace.model.mapper;
+package com.fatec.ace.dto.mapper;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.fatec.ace.dto.response.GrupoUsuarioResponse;
 import com.fatec.ace.entity.GrupoUsuario;
 import com.fatec.ace.entity.Usuario;
-import com.fatec.ace.model.info.GrupoUsuarioInfo;
 
 public class GrupoUsuarioMapper {
 	
-	public static GrupoUsuarioInfo toInfo(GrupoUsuario grupoUsuario) {
+	public static GrupoUsuarioResponse toResponse(GrupoUsuario grupoUsuario) {
 		Usuario usuario = grupoUsuario.getUsuario();
-		return new GrupoUsuarioInfo(
+		return new GrupoUsuarioResponse(
 				usuario.getId(),
 				usuario.getNome(),
 				usuario.getEmail(),
@@ -22,11 +22,11 @@ public class GrupoUsuarioMapper {
 			);
 	}
 	
-	public static Set<GrupoUsuarioInfo> toInfo(Set<GrupoUsuario> grupoUsuarioCollection) {
+	public static Set<GrupoUsuarioResponse> toResponse(Set<GrupoUsuario> grupoUsuarioCollection) {
 		return grupoUsuarioCollection
 			.stream()
 			.map(grupoUsuario -> {
-				return toInfo(grupoUsuario);
+				return toResponse(grupoUsuario);
 			})
 			.collect(Collectors.toSet());				
 	}

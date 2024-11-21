@@ -8,6 +8,7 @@ import org.modelmapper.ConfigurationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -81,5 +82,15 @@ public class RestExceptionHandler {
 		return ResponseEntity.status(status)
 				.body(new ExceptionResource(status.value(), e.getMessage()));
 	}
+	
+	@ExceptionHandler(IllegalAccessError.class)
+    public ResponseEntity<String> handleUnauthorizedAccess(IllegalAccessError ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
+    }
+	
+	@ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<String> handleBadCredentialsException(BadCredentialsException ex) {
+        return new ResponseEntity<>("Usuário ou senha inválidos.", HttpStatus.UNAUTHORIZED);
+    }
 
 }

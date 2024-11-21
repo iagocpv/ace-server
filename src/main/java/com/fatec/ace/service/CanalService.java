@@ -5,15 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fatec.ace.dto.request.CanalRequest;
 import com.fatec.ace.entity.Canal;
 import com.fatec.ace.entity.Grupo;
-import com.fatec.ace.model.form.CanalForm;
 import com.fatec.ace.repository.CanalRepository;
 
-import jakarta.transaction.Transactional;
-
 @Service
-@Transactional
 public class CanalService {
 	
 	@Autowired
@@ -27,7 +24,7 @@ public class CanalService {
 	public Canal buscarPorId(Long id) {
 		return repository.findById(id).get();
 	}
-	public Canal criar(CanalForm canal) {
+	public Canal criar(CanalRequest canal) {
 		Grupo grupo = grupoService.buscarPorId(canal.getIdGrupo());
 		return repository.save(new Canal(canal.getNome(), grupo));
 	}

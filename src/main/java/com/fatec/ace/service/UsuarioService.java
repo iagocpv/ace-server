@@ -3,10 +3,11 @@ package com.fatec.ace.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.fatec.ace.entity.Usuario;
+import com.fatec.ace.enums.Role;
 import com.fatec.ace.repository.UsuarioRepository;
 
 @Service
@@ -14,8 +15,12 @@ public class UsuarioService {
 
 	@Autowired
 	private UsuarioRepository repository;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	public Usuario criar(Usuario usuario) {
+		usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+		usuario.addRole(Role.USER);
 		return repository.save(usuario);
 	}
 	public List<Usuario> buscarTodos() {
@@ -24,9 +29,9 @@ public class UsuarioService {
 	public Usuario buscarPorId(Long id) {
 		return repository.findById(id).get();
 	}
-	public ResponseEntity<Object> deletar(Long id) {
+	public void deletar(Long id) {
+		repository.findById(id).orElseThrow();
 		repository.deleteById(id);
-		return ResponseEntity.noContent().build();
 	}
 	public Usuario atualizar(Long id, Usuario novosValores) {
 		Usuario usuario = this.buscarPorId(id);
