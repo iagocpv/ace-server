@@ -40,5 +40,10 @@ public class GrupoUsuario {
 	public void removeGrupoUsuario(GrupoUsuario grupoUsuario) {
 		usuario.getGrupos().remove(this);
 	}
+	
+	public boolean isAdmin() {
+	    return this.admin;
+	}
+
 
 }

@@ -1,16 +1,16 @@
-package com.fatec.ace.model.mapper;
+package com.fatec.ace.dto.mapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.fatec.ace.dto.response.UsuarioResponse;
+import com.fatec.ace.dto.response.UsuarioFullResponse;
 import com.fatec.ace.entity.Usuario;
-import com.fatec.ace.model.info.UsuarioBasicInfo;
-import com.fatec.ace.model.info.UsuarioFullInfo;
 
 public class UsuarioMapper {
 	
-	public static UsuarioBasicInfo toBasicInfo(Usuario usuario) {
-		return new UsuarioBasicInfo(
+	public static UsuarioResponse toResponse(Usuario usuario) {
+		return new UsuarioResponse(
 					usuario.getId(),
 					usuario.getNome(),
 					usuario.getEmail(),
@@ -20,15 +20,15 @@ public class UsuarioMapper {
 				);
 	}
 	
-	public static UsuarioFullInfo toFullInfo(Usuario usuario) {
-		return new UsuarioFullInfo(
+	public static UsuarioFullResponse toFullResponse(Usuario usuario) {
+		return new UsuarioFullResponse(
 					usuario.getId(),
 					usuario.getNome(),
 					usuario.getEmail(),
 					usuario.getSetor(),
 					usuario.getCargo(),
 					usuario.getTelefone(),
-					GrupoMapper.toBasicInfo(
+					GrupoMapper.toResponse(
 							usuario.getGrupos()
 								.stream()
 								.map(grupoUsuario -> grupoUsuario.getGrupo())
@@ -37,17 +37,17 @@ public class UsuarioMapper {
 				);
 	}
 	
-	public static List<UsuarioBasicInfo> toBasicInfo(List<Usuario> usuarios) {
+	public static List<UsuarioResponse> toResponse(List<Usuario> usuarios) {
 		return usuarios
 				.stream()
-				.map(usuario -> toBasicInfo(usuario))
+				.map(usuario -> toResponse(usuario))
 				.collect(Collectors.toList());		
 }
 	
-	public static List<UsuarioFullInfo> toFullInfo(List<Usuario> usuarios) {
+	public static List<UsuarioFullResponse> toFullResponse(List<Usuario> usuarios) {
 		return usuarios
 				.stream()
-				.map(usuario -> toFullInfo(usuario))
+				.map(usuario -> toFullResponse(usuario))
 				.collect(Collectors.toList());
 	}
 	

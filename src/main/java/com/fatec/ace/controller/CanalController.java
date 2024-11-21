@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fatec.ace.dto.request.CanalRequest;
 import com.fatec.ace.entity.Canal;
-import com.fatec.ace.model.form.CanalForm;
 import com.fatec.ace.service.CanalService;
 
 @RestController
@@ -35,8 +35,8 @@ public class CanalController {
 		return canalService.buscarPorId(id);
 	}
 	@PostMapping
-	public Canal createCanal(@RequestBody CanalForm canalForm) {
-		return canalService.criar(canalForm);
+	public Canal createCanal(@RequestBody CanalRequest canalDto) {
+		return canalService.criar(canalDto);
 	}
 	@PutMapping("/{id}")
 	public Canal updateCanal(@PathVariable("id") Long id, @RequestBody Canal canal) {

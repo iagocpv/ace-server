@@ -1,11 +1,11 @@
-package com.fatec.ace.model.info;
+package com.fatec.ace.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class GrupoBasicInfo {
+public class GrupoResponse {
 	Long id;
 	String nome;
 	String descricao;
